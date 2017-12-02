@@ -90,3 +90,20 @@ def edit_entry(request, entry_id):
                                                 args=[topic.id]))
     context = {'entry': entry, 'topic': topic, 'form': form}
     return render(request, 'learn_logs/edit_entry.html', context)
+
+
+@login_required()
+def del_topic(request, topic_id):
+    """删除主题，如果主题下有内容，则报错，不会删除主题"""
+    errors = ""
+    topic = Topic.objects.get(id=topic_id)
+    # 如果主题存在，判断主题下是否有内容
+    if topic:
+        topics = Topic.objects.filter(owner=request.user).order_by('date_added')
+        context = {'topics': topics}
+        Topic.objects.filter(id=topic_id).delete()
+        return render(request, 'learn_logs/topics.html', context)
+    else:
+        errors = "参数异常请刷新后重试"
+        context = {'errors': errors}
+        return render(request, 'learn_logs/topics.html', context)
