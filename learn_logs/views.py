@@ -94,7 +94,7 @@ def edit_entry(request, entry_id):
 
 @login_required()
 def del_topic(request, topic_id):
-    """删除主题，如果主题下有内容，则报错，不会删除主题"""
+    """删除主题，如果主题下有内容，也会删除主题"""
     errors = ""
     topic = Topic.objects.get(id=topic_id)
     # 如果主题存在，判断主题下是否有内容
