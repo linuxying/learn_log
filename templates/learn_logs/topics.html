@@ -5,17 +5,29 @@
 {% endblock %}
 
 {% block content %}
-    <ul>
-        {% for topic in topics %}
-            <li>
-                <h3>
-                    <a href="{% url 'learn_logs:topic' topic.id %}">{{ topic }}</a>
-                </h3>
-            </li>
-        {% empty %}
-            <li>No topics have been added yet.</li>
-        {% endfor %}
-    </ul>
+    <div class="col-md-15">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Topic</th>
+                <th>Operate</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for topic in topics %}
+                <tr>
+                    <td><a href="{% url 'learn_logs:topic' topic.id %}">{{ topic }}</a></td>
+                    <td><a class="label label-danger">Delete</a></td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td><a>No topics have been added yet.</a></td>
+                    <td></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
     <h3><a class="btn btn-primary" href="{% url 'learn_logs:new_topic' %}">Add new topic</a></h3>
 {% endblock content %}
