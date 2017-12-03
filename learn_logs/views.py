@@ -93,6 +93,28 @@ def edit_entry(request, entry_id):
 
 
 @login_required()
+def edit_topic(request, topic_id):
+    """编辑现有主题"""
+    topic = Topic.objects.get(id=topic_id)
+
+    if topic.owner != request.user:
+        raise Http404
+
+    if request.method != 'POST':
+        form = TopicForm(instance=topic)
+    else:
+        form = TopicForm(instance=topic, data=request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('learn_logs:topic',
+                                                args=[topic.id]))
+    context = {'topic': topic, 'form': form}
+    return render(request, 'learn_logs/edit_topic.html', context)
+
+
+
+
+@login_required()
 def del_topic(request, topic_id):
     """删除主题，如果主题下有内容，也会删除主题"""
     errors = ""

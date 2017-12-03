@@ -1,0 +1,19 @@
+{% extends 'learn_logs/base.html' %}
+{% load bootstrap3 %}
+
+{% block header %}
+    <h2>Edit Topic</h2>
+{% endblock header %}
+
+{% block content %}
+
+    <form class="form" action="{% url 'learn_logs:edit_topic' topic.id %}" method="post">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+
+        {% buttons %}
+            <button class="btn btn-primary" name="submit">save change</button>
+        {% endbuttons %}
+    </form>
+
+{% endblock %}

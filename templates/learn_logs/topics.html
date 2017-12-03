@@ -24,7 +24,7 @@
                         {% endif %}
                     </td>
                     <td><a href="{% url 'learn_logs:del_topic' topic.id %}" class="label label-danger" >Delete</a></td>
-                    <td><a class="label label-primary" >edit</a></td>
+                    <td><a href="{% url 'learn_logs:edit_topic' topic.id %}" class="label label-primary" >Edit</a></td>
                 </tr>
             {% empty %}
                 <tr>
